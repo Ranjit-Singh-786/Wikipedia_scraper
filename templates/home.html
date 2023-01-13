@@ -8,7 +8,7 @@
         <p> when you will pass the wikipedia page url inside the input box.<br>
             it will return title of the topic. and all information which are avialable on that page as a paragraph.
         </p>
-        <form action="{{url_for(result)}}" method="POST">
+        <form action="{{ url_for('result') }}" method="POST">
             <input type="text" name="page_url">
             <hr>
             <button type="submit">submit</button>
