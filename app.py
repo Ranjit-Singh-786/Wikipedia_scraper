@@ -50,7 +50,8 @@ def result():
             doc = nlp(text)
             named_entity = []
             for ent in doc.ents:
-                named_entity.append(ent.text)
+                entity = ent.text,ent.start_char,ent.end_char,ent.label_
+                named_entity.append(entity)
             return render_template('result.html',page_title=page_title,cleaned_text = cleaned_text,
                 sumary = sumary,
                 named_entity = named_entity)
