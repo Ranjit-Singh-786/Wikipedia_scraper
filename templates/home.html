@@ -42,7 +42,9 @@
           <hr width="400">
             <h3>ABOUT THE PROJECT</h3>
             <p> when you will pass the wikipedia page url inside the input box.<br>
-                it will return title of the topic. and all information which are avialable on that page as a paragraph.
+                and user can also direct write the name of the topic. <br>
+                it will return title of the topic. and all information which are avialable on that page as a paragraph.<br>
+                if the entered url is not corrected then it will tell you. please enter the correct the url.
             </p>
             <form action="{{ url_for('result') }}" method="POST">
                 <input type="text" name="page_url" id="inp">
