@@ -12,23 +12,28 @@ def Home():
 @app.route('/result',methods=['GET','POST'])
 def result():
     if request.method == 'POST':
-        page_url = str(request.form['page_url'])
-        response = requests.get(page_url)
-        soup = bs4.BeautifulSoup(response.text, "html.parser")
+        try:
+            page_url = str(request.form['page_url'])
+            response = requests.get(page_url)
+            soup = bs4.BeautifulSoup(response.text, "html.parser")
 
-        # Scraping the page title
-        page_title = soup.find("h1", class_="firstHeading").text
+        except:
+            return render_template('error.html')
+        else:
 
-        # Scraping all the paragraphs
-        text = " "
-        for p in soup.find_all("p"):
-            text += p.text
-        # fetching starting character
-        # text = text[0:2500]
+            # Scraping the page title
+            page_title = soup.find("h1", class_="firstHeading").text
 
-        #cleaned the text
-        cleaned_text = re.sub("[^a-zA-Z-0-9]"," ",text)
-        return render_template('result.html',page_title=page_title,cleaned_text = cleaned_text)
+            # Scraping all the paragraphs
+            text = " "
+            for p in soup.find_all("p"):
+                text += p.text
+            # fetching starting character
+            # text = text[0:2500]
+
+            #cleaned the text
+            cleaned_text = re.sub("[^a-zA-Z-0-9]"," ",text)
+            return render_template('result.html',page_title=page_title,cleaned_text = cleaned_text)
 
 if __name__ == "__main__":
     app.run(debug=True)
