@@ -12,7 +12,9 @@
         <hr>
         <h2>Name of the entity</h2>
         <hr>
-        <p>{{ named_entity }}</p>
+        {% for i in named_entity %}
+        <p>{{ i }}</p>
+        {% endfor %}
         <hr>
         <h2> Retrieved text paragraph</h2>
         <p>{{ cleaned_text }}</p>
