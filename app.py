@@ -2,7 +2,7 @@ from flask import Flask , url_for, render_template,request
 import requests
 import bs4
 import re
-
+import wikipedia
 app = Flask(__name__)
 
 @app.route('/')
@@ -18,6 +18,7 @@ def result():
             if page_url.startswith('http'):
                 response = requests.get(page_url)
                 soup = bs4.BeautifulSoup(response.text, "html.parser")
+                sumary = wikipedia.summary(page_url[30:])
             else:
                 page_url = base_url+page_url
                 response = requests.get(page_url)
@@ -40,7 +41,8 @@ def result():
 
             #cleaned the text
             cleaned_text = re.sub("[^a-zA-Z-0-9]"," ",text)
-            return render_template('result.html',page_title=page_title,cleaned_text = cleaned_text)
+            return render_template('result.html',page_title=page_title,cleaned_text = cleaned_text,
+                sumary = sumary)
 
 if __name__ == "__main__":
     app.run(debug=True)
