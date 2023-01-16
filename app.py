@@ -14,8 +14,14 @@ def result():
     if request.method == 'POST':
         try:
             page_url = str(request.form['page_url'])
-            response = requests.get(page_url)
-            soup = bs4.BeautifulSoup(response.text, "html.parser")
+            base_url = "https://en.wikipedia.org/wiki/"
+            if page_url.startswith('http'):
+                response = requests.get(page_url)
+                soup = bs4.BeautifulSoup(response.text, "html.parser")
+            else:
+                page_url = base_url+page_url
+                response = requests.get(page_url)
+                soup = bs4.BeautifulSoup(response.text,"html.parser")      
 
         except:
             return render_template('error.html')
