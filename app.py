@@ -3,6 +3,10 @@ import requests
 import bs4
 import re
 import wikipedia
+import spacy
+import warnings
+warnings.filterwarnings('ignore')
+nlp = spacy.load("en_core_web_sm")
 app = Flask(__name__)
 
 @app.route('/')
@@ -41,13 +45,17 @@ def result():
             text = " "
             for p in soup.find_all("p"):
                 text += p.text
-            # fetching starting character
-            # text = text[0:2500]
+            doc = nlp(text)
+            named_entity = []
+            for ent in doc.ents:
+                named_entity.append(ent.text)
+                #  "|",ent.label_,"|"
 
             #cleaned the text
             cleaned_text = re.sub("[^a-zA-Z-0-9]"," ",text)
             return render_template('result.html',page_title=page_title,cleaned_text = cleaned_text,
-                sumary = sumary)
+                sumary = sumary,
+                named_entity = named_entity)
 
 if __name__ == "__main__":
     app.run(debug=True)
