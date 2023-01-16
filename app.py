@@ -14,15 +14,20 @@ def result():
     if request.method == 'POST':
         try:
             page_url = str(request.form['page_url'])
-            base_url = "https://en.wikipedia.org/wiki/"
+            # code for full linc
             if page_url.startswith('http'):
                 response = requests.get(page_url)
                 soup = bs4.BeautifulSoup(response.text, "html.parser")
                 sumary = wikipedia.summary(page_url[30:])
+
+            # code for half linc
             else:
+                base_url = "https://en.wikipedia.org/wiki/"
+                sumary = wikipedia.summary(page_url)
                 page_url = base_url+page_url
                 response = requests.get(page_url)
-                soup = bs4.BeautifulSoup(response.text,"html.parser")      
+                soup = bs4.BeautifulSoup(response.text,"html.parser")
+                sumary = wikipedia.summary(page_url[30:])      
 
         except:
             return render_template('error.html')
