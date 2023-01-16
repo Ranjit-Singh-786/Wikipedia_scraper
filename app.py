@@ -20,6 +20,7 @@ def result():
         except:
             return render_template('error.html')
         else:
+            
 
             # Scraping the page title
             page_title = soup.find("h1", class_="firstHeading").text
